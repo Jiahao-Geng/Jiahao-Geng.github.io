@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件安全访问 | Documents Secure Access</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <!-- Tailwind 配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#165DFF',
+            secondary: '#36CFC9',
+            neutral: '#F5F7FA',
+            dark: '#1D2129',
+          },
+          fontFamily: {
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .lang-active {
+        font-weight: bold;
+        text-decoration: underline;
+      }
+    }
+  </style>
+</head>
+<body class="font-inter bg-neutral min-h-screen flex items-center justify-center p-4">
+  <!-- 背景装饰 -->
+  <div class="fixed inset-0 overflow-hidden -z-10">
+    <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-primary/10 blur-3xl"></div>
+    <div class="absolute -bottom-32 -left-32 w-80 h-80 rounded-full bg-secondary/10 blur-3xl"></div>
+  </div>
+
+  <!-- 主容器 -->
+  <div class="w-full max-w-md">
+    <!-- 语言切换器 -->
+    <div class="flex justify-end mb-4">
+      <div class="bg-white rounded-full shadow-md p-1 flex">
+        <button id="lang-zh" class="lang-btn lang-active px-3 py-1 rounded-full text-sm">中文</button>
+        <button id="lang-en" class="lang-btn px-3 py-1 rounded-full text-sm">English</button>
+      </div>
+    </div>
+
+    <!-- 卡片 -->
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl">
+      <!-- 卡片头部 -->
+      <div class="bg-gradient-primary p-8 text-white text-center">
+        <!-- 企业Logo -->
+        <div class="mb-4">
+          <div class="w-20 h-20 bg-white rounded-full mx-auto flex items-center justify-center shadow-lg">
+            	<span class="text-primary text-2xl font-bold">SLING</span>
+          </div>
+        </div>
+        
+        <h1 class="text-[clamp(1.5rem,3vw,2rem)] font-bold mb-2">
+          <span class="lang-zh">文件安全访问</span>
+          <span class="lang-en hidden">Documents Secure Access</span>
+        </h1>
+        <p class="text-white/80 text-sm">
+          <span class="lang-zh">请输入密码访问内部资源</span>
+          <span class="lang-en hidden">Please enter password to access internal resources</span>
+        </p>
+      </div>
+      
+      <!-- 卡片内容 -->
+      <div class="p-8 space-y-6">
+        <!-- 密码表单 -->
+        <form id="passwordForm" class="space-y-5">
+          <!-- 密码输入框 -->
+          <div class="space-y-2">
+            <label for="password" class="block text-sm font-medium text-dark">
+              <span class="lang-zh">密码</span>
+              <span class="lang-en hidden">Password</span>
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                <i class="fa fa-lock"></i>
+              </span>
+              <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                class="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300"
+                placeholder="输入密码/Enter the Password"
+                required
+              >
+              <button 
+                type="button" 
+                id="togglePassword" 
+                class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <i class="fa fa-eye-slash"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- 错误消息 -->
+          <div id="errorMessage" class="hidden p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+            <i class="fa fa-exclamation-circle mr-2"></i>
+            <span class="lang-zh">密码错误，请重试</span>
+            <span class="lang-en hidden">Incorrect password, please try again</span>
+          </div>
+          
+          <!-- 提交按钮 -->
+          <button 
+            type="submit" 
+            class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+          >
+            <span class="flex items-center justify-center">
+              <span class="lang-zh">验证并访问</span>
+              <span class="lang-en hidden">Verify & Access</span>
+              <i class="fa fa-arrow-right ml-2"></i>
+            </span>
+          </button>
+        </form>
+        
+        <!-- 企业联系方式 -->
+        <div class="pt-4 border-t border-gray-100">
+          <div class="flex items-center justify-center space-x-6 text-gray-500 text-sm">
+            <div class="flex items-center">
+              <i class="fa fa-envelope-o mr-2"></i>
+              <span class="lang-zh">sling@bbsbearing.com</span>
+              <span class="lang-en hidden">sling@bbsbearing.com</span>
+            </div>
+            <div class="flex items-center">
+              <i class="fa fa-phone mr-2"></i>
+              <span class="lang-zh">0086-575-86177888</span>
+              <span class="lang-en hidden">0086-575-86177888</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <div class="text-center text-xs text-gray-500 mt-6">
+      <p>
+        <span class="lang-zh">© 2025 浙江斯菱汽车轴承有限公司 | 保留所有权利</span>
+        <span class="lang-en hidden">© 2025 ZHEJIANG SLING AUTOMOBILE BEARING CO.,LTD | All rights reserved</span>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // 配置信息 - 请在此处设置您的密码和跳转链接
+    const config = {
+      correctPassword: "SLING", // 设置正确密码
+      redirectUrl: "https://drive.google.com/drive/folders/1Cr4Uq84XV8aZvo4KXJ5WN8pPSB7KXguX?usp=drive_link", // 设置跳转URL
+    };
+
+    // DOM 元素
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordForm = document.getElementById('passwordForm');
+    const errorMessage = document.getElementById('errorMessage');
+    const langButtons = document.querySelectorAll('.lang-btn');
+    const langElements = document.querySelectorAll('.lang-zh, .lang-en');
+
+    // 语言切换功能
+    langButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // 移除所有语言按钮的活动状态
+        langButtons.forEach(btn => btn.classList.remove('lang-active'));
+        // 添加当前按钮的活动状态
+        button.classList.add('lang-active');
+        
+        // 获取目标语言
+        const targetLang = button.id.split('-')[1];
+        
+        // 隐藏所有语言元素
+        langElements.forEach(el => el.classList.add('hidden'));
+        
+        // 显示目标语言元素
+        document.querySelectorAll(`.lang-${targetLang}`).forEach(el => el.classList.remove('hidden'));
+      });
+    });
+
+    // 切换密码可见性
+    togglePassword.addEventListener('click', function() {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      
+      // 切换图标
+      this.querySelector('i').classList.toggle('fa-eye');
+      this.querySelector('i').classList.toggle('fa-eye-slash');
+    });
+
+    // 表单提交处理
+    passwordForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // 验证密码
+      if (passwordInput.value === config.correctPassword) {
+        // 显示成功动画
+        const submitButton = this.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        
+        // 根据当前语言设置按钮文本
+        const currentLang = document.querySelector('.lang-active').id.split('-')[1];
+        const loadingText = currentLang === 'zh' ? 
+          '<i class="fa fa-circle-o-notch fa-spin"></i> 验证中...' : 
+          '<i class="fa fa-circle-o-notch fa-spin"></i> Verifying...';
+        
+        submitButton.innerHTML = loadingText;
+        
+        // 模拟验证延迟
+        setTimeout(() => {
+          // 跳转到指定URL
+          window.location.href = config.redirectUrl;
+        }, 1000);
+      } else {
+        // 显示错误消息
+        errorMessage.classList.remove('hidden');
+        
+        // 添加错误动画
+        passwordInput.classList.add('border-red-500');
+        passwordInput.classList.add('animate-shake');
+        
+        // 3秒后隐藏错误消息
+        setTimeout(() => {
+          errorMessage.classList.add('hidden');
+          passwordInput.classList.remove('border-red-500');
+          passwordInput.classList.remove('animate-shake');
+        }, 3000);
+        
+        // 聚焦密码输入框
+        passwordInput.focus();
+      }
+    });
+
+    // 添加抖动动画
+    document.head.insertAdjacentHTML('beforeend', `
+      <style>
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+          20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        .animate-shake {
+          animation: shake 0.5s ease-in-out;
+        }
+      </style>
+    `);
+  </script>
+</body>
+</html>
+    
